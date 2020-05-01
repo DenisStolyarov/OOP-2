@@ -1,0 +1,73 @@
+<Menu Height="Auto" VerticalAlignment="Stretch" Background="LightGray" Grid.ColumnSpan="2" Grid.RowSpan="1" Margin="0,10,0,202" Grid.Column="0" Grid.Row="2">
+            <MenuItem>
+                <MenuItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Height="10" Width="10" Fill="Black" Margin="0 0 5 0" />
+                        <TextBlock>File</TextBlock>
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem.Icon>
+                    <Image Source="C:\Users\Eugene\Documents\pen.png"></Image>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="View"></MenuItem>
+        </Menu>
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+            <Button Content="{DynamicResource AddButtonContent}" 
+                    Command="{Binding Add}"
+                    Style="{DynamicResource ButtonStyle}"/>
+            <Button Content="{DynamicResource DeleteButtonContent}" Background="Aqua"  
+                    Command="{Binding Delete}" 
+                    CommandParameter="{Binding SelectedRecord}"/>
+            <Button Content="{DynamicResource CopyButtonContent}" Background="Aqua" 
+                    Command="{Binding Copy}" 
+                    CommandParameter="{Binding SelectedRecord}"/>
+            <Button Content="{StaticResource Icon}" Click="Button_Click"></Button>
+
+        </StackPanel>
+
+        <ListView Grid.Column="0"  Grid.Row="2"
+                 ItemsSource="{Binding Records}"
+                 SelectedItem="{Binding SelectedRecord}" Grid.ColumnSpan="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding isCompleted, UpdateSourceTrigger=PropertyChanged}" Margin="0 10 0 0"></CheckBox>
+                        <TextBlock FontSize="18" Text="{Binding Path=Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Копировать" Command="{Binding Copy}" CommandParameter="{Binding SelectedRecord}"></MenuItem>
+                    <MenuItem Header="Вставить"></MenuItem>
+                    <MenuItem Header="Вырезать"></MenuItem>
+                    <MenuItem Header="Удалить"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListView>
+
+        <StackPanel Grid.Column="2" DataContext="{Binding SelectedRecord}" Grid.RowSpan="3">
+            <TextBlock Text="Выбранный элемент"  Style="{DynamicResource TextBlockStyle}"/>
+
+            <TextBlock Text="Title" Style="{DynamicResource TextBlockStyle}"/>
+            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Text="Priority" />
+            <TextBox Text="{Binding Priority, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Text="Date" />
+            <TextBlock Text="{Binding Date}" />
+
+            <TextBlock Text="Description" />
+            <TextBox Text="{Binding Description}" />
+
+            <TextBlock Text="Category" />
+            <ComboBox SelectedValue="{Binding Priority, UpdateSourceTrigger=PropertyChanged}">
+                <sys:Int32>1</sys:Int32>
+                <sys:Int32>2</sys:Int32>
+                <sys:Int32>3</sys:Int32>
+            </ComboBox>
+        </StackPanel>
